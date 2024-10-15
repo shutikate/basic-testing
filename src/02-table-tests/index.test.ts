@@ -14,10 +14,12 @@ const testCases = [
   { a: 3, b: 3, action: Action.Exponentiate, expected: 27 },
 ];
 
-describe.each(testCases)(
-  'should return expected value',
-  ({ a, b, action, expected }) => {
-    const result = simpleCalculator({ a, b, action });
-    expect(result).toEqual(expected);
-  },
-);
+describe('simpleCalculator', () => {
+  it.each(testCases)(
+    'should return expected value',
+    ({ a, b, action, expected }) => {
+      const result = simpleCalculator({ a, b, action });
+      expect(result).toEqual(expected);
+    },
+  );
+});
