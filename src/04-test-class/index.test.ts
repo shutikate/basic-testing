@@ -9,6 +9,10 @@ describe('BankAccount', () => {
   const bankAccount = getBankAccount(100);
   const transferAccount = getBankAccount(50);
 
+  afterEach(() => {
+    jest.restoreAllMocks();
+  });
+
   test('should create account with initial balance', () => {
     const initialBalance = bankAccount.getBalance();
     expect(initialBalance).toBe(100);
@@ -49,8 +53,11 @@ describe('BankAccount', () => {
   });
 
   test('fetchBalance should return number in case if request did not failed', async () => {
+    jest.unmock('lodash');
+    const lodash = jest.requireActual('lodash');
+    lodash.random = jest.fn(() => 1);
     const fetchBalance = await bankAccount.fetchBalance();
-    if (fetchBalance) expect(typeof fetchBalance).toBe('number');
+    expect(typeof fetchBalance).toBe('number');
   });
 
   test('should set new balance if fetchBalance returned number', async () => {
